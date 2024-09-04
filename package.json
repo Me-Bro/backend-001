@@ -1,0 +1,24 @@
+{
+  "name": "backend-001",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Me-Bro/backend-001.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Me-Bro/backend-001/issues"
+  },
+  "homepage": "https://github.com/Me-Bro/backend-001#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
