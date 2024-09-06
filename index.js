@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import userRoutes from "./Routes/User.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "swagger-output.json";
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
@@ -20,6 +22,7 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 // Routes
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/user", userRoutes);
 
 /* Mongoose settings */
