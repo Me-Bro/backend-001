@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
+import userRoutes from "./Routes/User.js";
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("common"));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
+// Routes
+app.use("/api/v1/user", userRoutes);
 
 /* Mongoose settings */
 const connect = async () => {
