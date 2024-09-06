@@ -1,10 +1,10 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from cors;
-import bodyParser from 'body-parser';
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import helmet from "helmet";
-import morgan from 'morgan';
+import morgan from "morgan";
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
