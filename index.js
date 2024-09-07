@@ -5,9 +5,26 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
+import multer from "multer";
+
 import userRoutes from "./Routes/User.js";
+import dataConversionRoutes from "./Routes/DataConversion.js";
+
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger-output.json";
+import swaggerDocument from "./swagger-output.json" with { type: "json" };
+
+/* Disk Configuration */
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads")
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage})
+
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
@@ -21,9 +38,18 @@ app.use(morgan("common"));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
+
+
 // Routes
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/dataconversion",dataConversionRoutes);
+
+app.post("/api/upload", upload.single("file"), (req, res) =>{
+  console.log(req.body);
+  console.log(req.file);
+  res.send("Uploaded");
+});
 
 /* Mongoose settings */
 const connect = async () => {
