@@ -7,7 +7,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import userRoutes from "./Routes/User.js";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "swagger-output.json";
+import swaggerDocument from "./swagger-output.json";
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
