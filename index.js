@@ -10,8 +10,7 @@ import multer from "multer";
 //import path from "path";
 
 import userRoutes from "./Routes/User.js";
-import dataConversionRoutes from "./Routes/DataConversion.js";
-
+import pdfRoutes from "./Routes/Pdf.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger-output.json" with { type: "json" };
 
@@ -50,7 +49,8 @@ const upload = multer({ storage });
 // Routes
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/dataconversion",dataConversionRoutes);
+app.use("/pdf",pdfRoutes);
+
 
 app.post("/upload", upload.single("image"), (req, res) =>{
   console.log(req.body);
