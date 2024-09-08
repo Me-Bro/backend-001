@@ -13,3 +13,13 @@ export const JsonToCsv = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const CsvToJson = async (req, res) => {
+  try {
+    const data = converter.csv2json();
+    console.log(data);
+    res.status(200).json(data);
+  } catch (error) {ss
+    res.status(500).json({ error: error.message });
+  }
+};
