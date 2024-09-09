@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import mailRoutes from "./Routes/Mail.js";
 import userRoutes from "./Routes/User.js";
 import pdfRoutes from "./Routes/Pdf.js";
 import swaggerUi from "swagger-ui-express";
@@ -32,6 +33,7 @@ app.get("/upload",(req,res)=>{
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/user", userRoutes);
 app.use("/pdf",pdfRoutes);
+app.use("/send",mailRoutes);
 
 
 app.post("/upload", upload.single("image"), (req, res) =>{
