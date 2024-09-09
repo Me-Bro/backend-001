@@ -1,13 +1,11 @@
+import { connect } from "./config/index.js";
+import { upload } from "./Services/Multer/config.js";
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-import multer from "multer";
-//import { fileURLToPath } from "url";
-//import path from "path";
 
 import userRoutes from "./Routes/User.js";
 import pdfRoutes from "./Routes/Pdf.js";
@@ -30,22 +28,6 @@ app.get("/upload",(req,res)=>{
   res.render("upload");
 });
 
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = path.dirname(__filename);
-//app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-
-
-/* FILE STORAGE */
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "Image");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage });
-
 // Routes
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/v1/user", userRoutes);
@@ -55,24 +37,9 @@ app.use("/pdf",pdfRoutes);
 app.post("/upload", upload.single("image"), (req, res) =>{
   console.log(req.body);
   console.log(req.file);
-  res.send("Uploaded");
+  res.send(" File successfully uploaded");
 });
 
-/* Mongoose settings */
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO);
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    throw error;
-  }
-};
-mongoose.connection.on("disconnected", () => {
-  console.log("Disconnected to MongoDB");
-});
-mongoose.connection.on("connected", () => {
-  console.log("Connected to MongoDB");
-});
 
 app.listen(PORT, () => {
   connect();
