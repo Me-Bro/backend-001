@@ -2,10 +2,7 @@ import { connect } from "./config/index.js";
 import { upload } from "./Services/Multer/config.js";
 import express from "express";
 import cors from "cors";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import helmet from "helmet";
-import morgan from "morgan";
 
 import mailRoutes from "./Routes/Mail.js";
 import userRoutes from "./Routes/User.js";
@@ -19,11 +16,6 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan("common"));
-app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.set("view engine","ejs");
 app.get("/upload",(req,res)=>{
   res.render("upload");
