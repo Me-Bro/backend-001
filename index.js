@@ -1,7 +1,14 @@
+import { connect } from "./config/index.js";
+import { upload } from "./Services/Multer/config.js";
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+
+import mailRoutes from "./Routes/Mail.js";
+import userRoutes from "./Routes/User.js";
+import pdfRoutes from "./Routes/Pdf.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger-output.json" with { type: "json" };
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
@@ -9,22 +16,24 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
+app.set("view engine","ejs");
+app.get("/upload",(req,res)=>{
+  res.render("upload");
+});
 
-/* Mongoose settings */
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO);
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    throw error;
-  }
-};
-mongoose.connection.on("disconnected", () => {
-  console.log("Disconnected to MongoDB");
+// Routes
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/v1/user", userRoutes);
+app.use("/pdf",pdfRoutes);
+app.use("/send",mailRoutes);
+
+
+app.post("/upload", upload.single("image"), (req, res) =>{
+  console.log(req.body);
+  console.log(req.file);
+  res.send(" File successfully uploaded");
 });
-mongoose.connection.on("connected", () => {
-  console.log("Connected to MongoDB");
-});
+
 
 app.listen(PORT, () => {
   connect();
