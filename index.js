@@ -1,10 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import helmet from "helmet";
-import morgan from "morgan";
 
 /*    Configuration    */
 const PORT = process.env.PORT || 3000;
@@ -12,11 +9,6 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan("common"));
-app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 /* Mongoose settings */
 const connect = async () => {
